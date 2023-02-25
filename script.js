@@ -23,16 +23,28 @@ const ArrRLog = () => console.log("right arrow clicked!");
 const arrowLeft = document.getElementById("arrow_left");
 const arrowRight = document.getElementById("arrow_right");
 
+const images = slides.map((slide) => slide.image);
+
+const htmlSlide = document
+  .getElementById("banner")
+  .getElementsByClassName("banner-img")[0];
+const currentSlide = htmlSlide.getAttribute("src").split("/")[4];
+
+console.log(images[0]);
+
 arrowLeft.addEventListener("click", ArrLLog);
 arrowRight.addEventListener("click", ArrRLog);
 
 for (let i = 0; i < slides.length; i++) {
-  const dot_div = document.createElement("div");
-  const dot_att = document.createAttribute("class");
-  dot_att.value = "dot";
+  const dotDiv = document.createElement("div");
+  const dotAttribute = document.createAttribute("class");
+  dotAttribute.value = "dot";
 
-  dot_div.setAttributeNode(dot_att);
+  if (currentSlide == images[i]) {
+    dotAttribute.value = "dot dot_selected";
+  }
 
+  dotDiv.setAttributeNode(dotAttribute);
   const dots = document.querySelector(".dots");
-  dots.appendChild(dot_div);
+  dots.appendChild(dotDiv);
 }
