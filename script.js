@@ -24,7 +24,8 @@ const arrowRight = document.getElementById("arrow_right");
 const images = slides.map((slide) => slide.image);
 const text = slides.map((slide) => slide.tagLine);
 
-const bannerElement = document.getElementById("banner");
+const bannerElement = document.getElementById("banner").children[1];
+
 
 const htmlSlide = document
   .getElementById("banner")
@@ -33,7 +34,7 @@ const htmlSlide = document
 let slideCounter = 0;
 
 function prevSlide() {
-  
+ 
   if (slideCounter <= 0) {
     slideCounter = slides.length;
   }
@@ -41,7 +42,7 @@ function prevSlide() {
   slideCounter = slideCounter - 1;
 
   htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
-  bannerElement.children[1] = "<p>" + text[slideCounter] + "</p>";
+  bannerElement.innerHTML = text[slideCounter];
 }
 
 console.log(bannerElement.children[1]);
@@ -53,7 +54,7 @@ function nextSlide() {
   }
 
   htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
-  //bannerParagraph.outerHTML = "<p>" + text[slideCounter] + "</p>";
+  bannerElement.innerHTML = text[slideCounter];
 }
 
 arrowLeft.addEventListener("click", prevSlide);
