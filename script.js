@@ -18,33 +18,54 @@ const slides = [
   },
 ];
 
-const ArrLLog = () => console.log("left arrow clicked!");
-const ArrRLog = () => console.log("right arrow clicked!");
 const arrowLeft = document.getElementById("arrow_left");
 const arrowRight = document.getElementById("arrow_right");
 
 const images = slides.map((slide) => slide.image);
+const text = slides.map((slide) => slide.tagLine);
+
+const bannerElement = document.getElementById("banner");
 
 const htmlSlide = document
   .getElementById("banner")
   .getElementsByClassName("banner-img")[0];
-const currentSlide = htmlSlide.getAttribute("src").split("/")[4];
 
-console.log(images[0]);
+let slideCounter = 0;
 
-arrowLeft.addEventListener("click", ArrLLog);
-arrowRight.addEventListener("click", ArrRLog);
-
-for (let i = 0; i < slides.length; i++) {
-  const dotDiv = document.createElement("div");
-  const dotAttribute = document.createAttribute("class");
-  dotAttribute.value = "dot";
-
-  if (currentSlide == images[i]) {
-    dotAttribute.value = "dot dot_selected";
+function prevSlide() {
+  
+  if (slideCounter <= 0) {
+    slideCounter = slides.length;
   }
 
-  dotDiv.setAttributeNode(dotAttribute);
+  slideCounter = slideCounter - 1;
+
+  htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
+  bannerElement.children[1] = "<p>" + text[slideCounter] + "</p>";
+}
+
+console.log(bannerElement.children[1]);
+
+function nextSlide() {
+  slideCounter = slideCounter + 1;
+  if (slideCounter >= slides.length) {
+    slideCounter = 0;
+  }
+
+  htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
+  //bannerParagraph.outerHTML = "<p>" + text[slideCounter] + "</p>";
+}
+
+arrowLeft.addEventListener("click", prevSlide);
+arrowRight.addEventListener("click", nextSlide);
+
+for (let i = 0; i < slides.length; i++) {
   const dots = document.querySelector(".dots");
+  const dotDiv = document.createElement("div");
+  dotDiv.classList.add("dot");
+  if (i == slideCounter) {
+    dotDiv.classList.add("dot", "dot_selected");
+  }
   dots.appendChild(dotDiv);
+  console.log(slideCounter);
 }
