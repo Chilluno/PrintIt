@@ -24,8 +24,8 @@ const arrowRight = document.getElementById("arrow_right");
 const images = slides.map((slide) => slide.image);
 const text = slides.map((slide) => slide.tagLine);
 
-const bannerElement = document.getElementById("banner").children[1];
-
+const bannerParagraph = document.getElementById("banner").children[1];
+const dots = document.querySelector(".dots");
 
 const htmlSlide = document
   .getElementById("banner")
@@ -34,27 +34,40 @@ const htmlSlide = document
 let slideCounter = 0;
 
 function prevSlide() {
- 
   if (slideCounter <= 0) {
     slideCounter = slides.length;
   }
-
+  let nextDot = slideCounter;
   slideCounter = slideCounter - 1;
 
   htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
-  bannerElement.innerHTML = text[slideCounter];
-}
+  bannerParagraph.innerHTML = text[slideCounter];
 
-console.log(bannerElement.children[1]);
+  dots.children[slideCounter].classList.add("dot_selected");
+  console.log(slideCounter);
+
+  if (slideCounter == 3) {
+    dots.children[0].classList.remove("dot_selected");
+  } else {
+    dots.children[nextDot].classList.remove("dot_selected");
+  }
+  console.log(nextDot);
+}
 
 function nextSlide() {
   slideCounter = slideCounter + 1;
+  let prevDot = slideCounter - 1;
   if (slideCounter >= slides.length) {
     slideCounter = 0;
   }
 
   htmlSlide.src = "./assets/images/slideshow/" + images[slideCounter];
-  bannerElement.innerHTML = text[slideCounter];
+  bannerParagraph.innerHTML = text[slideCounter];
+
+  dots.children[slideCounter].classList.add("dot_selected");
+  console.log(slideCounter);
+  dots.children[prevDot].classList.remove("dot_selected");
+  console.log(prevDot);
 }
 
 arrowLeft.addEventListener("click", prevSlide);
@@ -64,9 +77,6 @@ for (let i = 0; i < slides.length; i++) {
   const dots = document.querySelector(".dots");
   const dotDiv = document.createElement("div");
   dotDiv.classList.add("dot");
-  if (i == slideCounter) {
-    dotDiv.classList.add("dot", "dot_selected");
-  }
   dots.appendChild(dotDiv);
-  console.log(slideCounter);
+  dots.children[0].classList.add("dot_selected");
 }
